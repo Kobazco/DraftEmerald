@@ -44,6 +44,9 @@
 #include "string_util.h"
 #include "task.h"
 #include "pokemon_summary_screen.h"
+#include "speedchoice.h"
+#include "play_time.h"
+#include "done_button.h"
 #include "constants/abilities.h"
 #include "constants/flags.h"
 #include "constants/items.h"
@@ -84,6 +87,8 @@ enum { // Util
     DEBUG_UTIL_MENU_ITEM_TRAINER_NAME,
     DEBUG_UTIL_MENU_ITEM_TRAINER_GENDER,
     DEBUG_UTIL_MENU_ITEM_TRAINER_ID,
+    DEBUG_UTIL_MENU_ITEM_DEBUG,
+    DEBUG_UTIL_MENU_ITEM_IGT,
 };
 enum { // Scripts
     DEBUG_UTIL_MENU_ITEM_SCRIPT_1,
@@ -151,7 +156,6 @@ enum { //Sound
 
 // EWRAM
 static EWRAM_DATA struct DebugMonData *sDebugMonData = NULL;
-
 
 // *******************************
 struct DebugMonData
@@ -221,6 +225,8 @@ static void DebugAction_Util_WatchCredits(u8);
 static void DebugAction_Util_Trainer_Name(u8);
 static void DebugAction_Util_Trainer_Gender(u8);
 static void DebugAction_Util_Trainer_Id(u8);
+static void DebugAction_Util_Debug_Toggle(u8);
+static void DebugAction_Util_IGT_Reset(u8);
 
 static void DebugAction_Flags_Flags(u8 taskId);
 static void DebugAction_Flags_FlagsSelect(u8 taskId);
@@ -327,6 +333,8 @@ static const u8 gDebugText_Util_WatchCredits[] =            _("Watch Credits");
 static const u8 gDebugText_Util_Trainer_Name[] =            _("Trainer name");
 static const u8 gDebugText_Util_Trainer_Gender[] =          _("Toggle T. Gender");
 static const u8 gDebugText_Util_Trainer_Id[] =              _("New Trainer Id");
+static const u8 gDebugText_Util_Debug_Toggle[] =            _("Toggle Debug ON/OFF");
+static const u8 gDebugText_Util_IGT_Reset[] =               _("IGT Reset");
 // Flags Menu
 static const u8 gDebugText_Flags_Flags[] =                  _("Set Flag XXXX");
 static const u8 gDebugText_Flags_SetPokedexFlags[] =        _("All Pokédex Flags");
@@ -445,6 +453,8 @@ static const struct ListMenuItem sDebugMenu_Items_Utilities[] =
     [DEBUG_UTIL_MENU_ITEM_TRAINER_NAME]     = {gDebugText_Util_Trainer_Name,     DEBUG_UTIL_MENU_ITEM_TRAINER_NAME},
     [DEBUG_UTIL_MENU_ITEM_TRAINER_GENDER]   = {gDebugText_Util_Trainer_Gender,   DEBUG_UTIL_MENU_ITEM_TRAINER_GENDER},
     [DEBUG_UTIL_MENU_ITEM_TRAINER_ID]       = {gDebugText_Util_Trainer_Id,       DEBUG_UTIL_MENU_ITEM_TRAINER_ID},
+    [DEBUG_UTIL_MENU_ITEM_DEBUG]            = {gDebugText_Util_Debug_Toggle,     DEBUG_UTIL_MENU_ITEM_DEBUG},
+    [DEBUG_UTIL_MENU_ITEM_IGT]              = {gDebugText_Util_IGT_Reset,        DEBUG_UTIL_MENU_ITEM_IGT},
 };
 static const struct ListMenuItem sDebugMenu_Items_Scripts[] =
 {
@@ -522,6 +532,8 @@ static void (*const sDebugMenu_Actions_Utilities[])(u8) =
     [DEBUG_UTIL_MENU_ITEM_TRAINER_NAME]     = DebugAction_Util_Trainer_Name,
     [DEBUG_UTIL_MENU_ITEM_TRAINER_GENDER]   = DebugAction_Util_Trainer_Gender,
     [DEBUG_UTIL_MENU_ITEM_TRAINER_ID]       = DebugAction_Util_Trainer_Id,
+    [DEBUG_UTIL_MENU_ITEM_DEBUG]            = DebugAction_Util_Debug_Toggle,
+    [DEBUG_UTIL_MENU_ITEM_IGT]              = DebugAction_Util_IGT_Reset,
 };
 static void (*const sDebugMenu_Actions_Scripts[])(u8) =
 {
@@ -1193,7 +1205,20 @@ static void DebugAction_Util_Trainer_Id(u8 taskId)
     Debug_DestroyMenu(taskId);
     EnableBothScriptContexts();
 }
-
+static void DebugAction_Util_Debug_Toggle(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    gSaveBlock2Ptr->speedchoiceConfig.debugMenus = DEBUG_MENUS_OFF;
+    Debug_DestroyMenu(taskId);
+    EnableBothScriptContexts();
+}
+static void DebugAction_Util_IGT_Reset(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    PlayTimeCounter_Reset();
+    Debug_DestroyMenu(taskId);
+    EnableBothScriptContexts();
+}
 // *******************************
 // Actions Scripts
 static void DebugAction_Util_Script_1(u8 taskId)
@@ -2063,17 +2088,20 @@ static void DebugAction_Give_Pokemon_SelectLevel(u8 taskId)
         }
         else
         {
+            u8 abilityId;
             sDebugMonData->mon_level = gTasks[taskId].data[3]; //Level
             gTasks[taskId].data[3] = 0;
             gTasks[taskId].data[4] = 0;
 
-            ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].data[3], STR_CONV_MODE_LEADING_ZEROS, 0);
+            StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].data[4]]);
+            ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].data[3], STR_CONV_MODE_LEADING_ZEROS, 2);
             StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
-            StringCopyPadded(gStringVar2, gDebugText_Flags_FlagUnset, CHAR_SPACE, 15);
-            StringExpandPlaceholders(gStringVar4, gDebugText_PokemonShiny);
+            abilityId = GetAbilityBySpecies(sDebugMonData->mon_speciesId, 0);
+            StringCopy(gStringVar1, gAbilityNames[abilityId]);
+            StringExpandPlaceholders(gStringVar4, gDebugText_PokemonAbility);
             AddTextPrinterParameterized(gTasks[taskId].data[2], 1, gStringVar4, 1, 1, 0, NULL);
 
-            gTasks[taskId].func = DebugAction_Give_Pokemon_SelectShiny;
+            gTasks[taskId].func = DebugAction_Give_Pokemon_SelectAbility;
         }
     }
     else if (gMain.newKeys & B_BUTTON)
@@ -2193,11 +2221,12 @@ static void DebugAction_Give_Pokemon_SelectAbility(u8 taskId)
     u8 abilityId;
     u8 abilityCount = 0;
     if (gBaseStats[sDebugMonData->mon_speciesId].abilities[1] != ABILITY_NONE)
-        abilityCount++;
+        abilityCount = 2;
     #ifdef POKEMON_EXPANSION
-        if (gBaseStats[sDebugMonData->mon_speciesId].abilities[2] != ABILITY_NONE)
-            abilityCount++;
+        if (gBaseStats[sDebugMonData->mon_speciesId].abilityHidden != ABILITY_NONE)
+            //abilityCount++;
     #endif
+    abilityCount = 2;
     if (gMain.newKeys & DPAD_ANY)
     {
         PlaySE(SE_SELECT);
@@ -2227,20 +2256,15 @@ static void DebugAction_Give_Pokemon_SelectAbility(u8 taskId)
     if (gMain.newKeys & A_BUTTON)
     {
         sDebugMonData->mon_abilityNum = gTasks[taskId].data[3]; //AbilityNum
+        sDebugMonData->mon_natureId = 0xFF; //NatureId
         gTasks[taskId].data[3] = 0;
         gTasks[taskId].data[4] = 0;
 
-        StringCopy(gStringVar2, gText_DigitIndicator[gTasks[taskId].data[4]]);
-        ConvertIntToDecimalStringN(gStringVar3, gTasks[taskId].data[3], STR_CONV_MODE_LEADING_ZEROS, 2);
-        StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
-        StringExpandPlaceholders(gStringVar4, gDebugText_PokemonIV_0);
-        AddTextPrinterParameterized(gTasks[taskId].data[2], 1, gStringVar4, 1, 1, 0, NULL);
-
-        gTasks[taskId].func = DebugAction_Give_Pokemon_SelectIVs;
+        gTasks[taskId].func = DebugAction_Give_Pokemon_ComplexCreateMon;
     }
     else if (gMain.newKeys & B_BUTTON)
     {
-        PlaySE(SE_SELECT);
+        PlaySE(MUS_LEVEL_UP);
         Free(sDebugMonData); //Frees EWRAM of MonData Struct
         DebugAction_DestroyExtraWindow(taskId);
     }
@@ -2522,12 +2546,12 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
     moves[1]        = sDebugMonData->mon_move_1;
     moves[2]        = sDebugMonData->mon_move_2;
     moves[3]        = sDebugMonData->mon_move_3;
-    IVs[0]          = sDebugMonData->mon_iv_hp;
-    IVs[1]          = sDebugMonData->mon_iv_atk;
-    IVs[2]          = sDebugMonData->mon_iv_def;
-    IVs[3]          = sDebugMonData->mon_iv_speed;
-    IVs[4]          = sDebugMonData->mon_iv_satk;
-    IVs[5]          = sDebugMonData->mon_iv_sdef;
+    IVs[0]          = Random() % 31;
+    IVs[1]          = Random() % 31;
+    IVs[2]          = Random() % 31;
+    IVs[3]          = Random() % 31;
+    IVs[4]          = Random() % 31;
+    IVs[5]          = Random() % 31;
 
 
     //Nature
@@ -3765,3 +3789,61 @@ static void DebugTask_HandleMenuInput(u8 taskId, void (*HandleInput)(u8))
     }
 }
 */
+
+// Level Cap Port
+u8 GetCurrentBadgeCount(void)
+{
+    u16 i, badgeCount = 0;
+    for (i = FLAG_BADGE01_GET; i < FLAG_BADGE01_GET + NUM_BADGES; i++) //count badges
+    {
+        if (FlagGet(i))
+            badgeCount++;
+    }
+    return badgeCount;
+}
+
+enum LevelCap {
+    LEVEL_CAP_NO_BADGES,
+    LEVEL_CAP_BADGE_1,
+    LEVEL_CAP_BADGE_2,
+    LEVEL_CAP_BADGE_3,
+    LEVEL_CAP_BADGE_4,
+    LEVEL_CAP_BADGE_5,
+    LEVEL_CAP_BADGE_6,
+    LEVEL_CAP_BADGE_7,
+    LEVEL_CAP_BADGE_8
+};
+static const u8 sLevelCapTable_Normal[] = 
+{
+    [LEVEL_CAP_NO_BADGES]   = 15,
+    [LEVEL_CAP_BADGE_1]     = 19,
+    [LEVEL_CAP_BADGE_2]     = 24,
+    [LEVEL_CAP_BADGE_3]     = 29,
+    [LEVEL_CAP_BADGE_4]     = 31,
+    [LEVEL_CAP_BADGE_5]     = 33,
+    [LEVEL_CAP_BADGE_6]     = 42,
+    [LEVEL_CAP_BADGE_7]     = 46,
+    [LEVEL_CAP_BADGE_8]     = 58,
+};
+static const u8 sLevelCapTable_Hard[] = 
+{
+    [LEVEL_CAP_NO_BADGES]   = 12,
+    [LEVEL_CAP_BADGE_1]     = 16,
+    [LEVEL_CAP_BADGE_2]     = 20,
+    [LEVEL_CAP_BADGE_3]     = 24,
+    [LEVEL_CAP_BADGE_4]     = 27,
+    [LEVEL_CAP_BADGE_5]     = 29,
+    [LEVEL_CAP_BADGE_6]     = 41,
+    [LEVEL_CAP_BADGE_7]     = 41,
+    [LEVEL_CAP_BADGE_8]     = 55,
+};
+
+u8 GetCurrentPartyLevelCap(void)
+{
+    u8 badgeCount = GetCurrentBadgeCount();
+
+    if (FlagGet(FLAG_IS_CHAMPION)) //after beating the E4 remove the cap
+        return MAX_LEVEL;
+
+    return sLevelCapTable_Normal[badgeCount];
+}

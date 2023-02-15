@@ -24,6 +24,7 @@
 #include "text.h"
 #include "util.h"
 #include "window.h"
+#include "debug.h"
 #include "constants/battle_anim.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
@@ -1609,7 +1610,7 @@ static void PlayerPartnerHandleExpUpdate(void)
 {
     u8 monId = gBattleResources->bufferA[gActiveBattler][1];
 
-    if (GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL) >= MAX_LEVEL)
+    if (GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL) >= GetCurrentPartyLevelCap())
     {
         PlayerPartnerBufferExecCompleted();
     }

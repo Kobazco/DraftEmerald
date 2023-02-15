@@ -25,6 +25,7 @@
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 #include "battle_debug.h"
+#include "debug.h"
 #include "constants/battle_config.h"
 #include "data.h"
 #include "pokemon_summary_screen.h"
@@ -2580,7 +2581,7 @@ static void MoveBattleBarGraphically(u8 battlerId, u8 whichBar)
                     &gBattleSpritesDataPtr->battleBars[battlerId].currValue,
                     array, B_EXPBAR_PIXELS / 8);
         level = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battlerId]], MON_DATA_LEVEL);
-        if (level == MAX_LEVEL)
+        if (level == GetCurrentPartyLevelCap())
         {
             for (i = 0; i < 8; i++)
                 array[i] = 0;

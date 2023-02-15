@@ -7,4 +7,6 @@ extern int gDebugSystemEnabled;
 
 void Debug_ShowMainMenu(void);
 
+u8 GetCurrentPartyLevelCap(void);
+
 #endif // GUARD_DEBUG_H
