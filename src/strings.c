@@ -1828,3 +1828,5 @@ const u8 gText_Answer[] = _("ANSWER");
 const u8 gText_PokeBalls[] = _("POKé BALLS");
 const u8 gText_Berry[] = _("BERRY");
 const u8 gText_Berries[] = _("BERRIES");
+// Relearn Moves - credit to Diego Mertens
+const u8 gText_Moves_Menu[] = _("Change Moves");

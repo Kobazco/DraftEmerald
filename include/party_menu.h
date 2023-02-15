@@ -93,4 +93,6 @@ void BufferMoveDeleterNicknameAndMove(void);
 void GetNumMovesSelectedMonHas(void);
 void MoveDeleterChooseMoveToForget(void);
 
+void CB2_ReturnToPartyMenuFromSummaryScreen(void);
+
 #endif // GUARD_PARTY_MENU_H
