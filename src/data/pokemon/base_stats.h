@@ -22562,12 +22562,12 @@ const struct BaseStats gBaseStats[] =
 
     [SPECIES_SOLGALEO] =
     {
-        .baseHP        = 137,
-        .baseAttack    = 137,
-        .baseDefense   = 107,
-        .baseSpeed     = 97,
-        .baseSpAttack  = 113,
-        .baseSpDefense = 89,
+        .baseHP        = 100,
+        .baseAttack    = 105,
+        .baseDefense   = 95,
+        .baseSpeed     = 65,
+        .baseSpAttack  = 75,
+        .baseSpDefense = 80,
         .type1 = TYPE_PSYCHIC,
         .type2 = TYPE_STEEL,
         .catchRate = 45,
@@ -22590,12 +22590,12 @@ const struct BaseStats gBaseStats[] =
 
     [SPECIES_LUNALA] =
     {
-        .baseHP        = 137,
-        .baseAttack    = 113,
-        .baseDefense   = 89,
-        .baseSpeed     = 97,
-        .baseSpAttack  = 137,
-        .baseSpDefense = 107,
+        .baseHP        = 100,
+        .baseAttack    = 65,
+        .baseDefense   = 75,
+        .baseSpeed     = 105,
+        .baseSpAttack  = 95,
+        .baseSpDefense = 85,
         .type1 = TYPE_PSYCHIC,
         .type2 = TYPE_GHOST,
         .catchRate = 45,
