@@ -127,6 +127,7 @@ enum { // Give
     DEBUG_GIVE_MENU_ITEM_DAYCARE_EGG,
     DEBUG_GIVE_MENU_ITEM_FILL_PC,
     DEBUG_GIVE_MENU_ITEM_CHEAT,
+    DEBUG_GIVE_MENU_ITEM_RACE_ITEMS,
     //DEBUG_MENU_ITEM_ACCESS_PC,
 };
 enum { //Sound
@@ -266,6 +267,7 @@ static void DebugAction_Give_MaxCoins(u8 taskId);
 static void DebugAction_Give_DayCareEgg(u8 taskId);
 static void DebugAction_Give_FillPC(u8 taskId);
 static void DebugAction_Give_CHEAT(u8 taskId);
+static void DebugAction_Give_RaceItems(u8 taskId);
 static void DebugAction_AccessPC(u8 taskId);
 
 static void DebugAction_Sound_SE(u8 taskId);
@@ -385,6 +387,7 @@ static const u8 gDebugText_Give_MaxCoins[] =            _("Max Coins");
 static const u8 gDebugText_Give_DaycareEgg[] =          _("Daycare Egg");
 static const u8 gDebugText_Give_FillPc[] =              _("Fill Pc");
 static const u8 gDebugText_Give_GiveCHEAT[] =           _("CHEAT Start");
+static const u8 gDebugText_Give_RaceItems[] =           _("Race Items");
 // static const u8 gDebugText_Give_AccessPC[] =         _("Access PC");
 // Sound Mneu
 static const u8 gDebugText_Sound_SE[] =                 _("Effects");
@@ -497,6 +500,7 @@ static const struct ListMenuItem sDebugMenu_Items_Give[] =
     [DEBUG_GIVE_MENU_ITEM_DAYCARE_EGG]      = {gDebugText_Give_DaycareEgg,          DEBUG_GIVE_MENU_ITEM_DAYCARE_EGG},
     [DEBUG_GIVE_MENU_ITEM_FILL_PC]          = {gDebugText_Give_FillPc,              DEBUG_GIVE_MENU_ITEM_FILL_PC},
     [DEBUG_GIVE_MENU_ITEM_CHEAT]            = {gDebugText_Give_GiveCHEAT,           DEBUG_GIVE_MENU_ITEM_CHEAT},
+    [DEBUG_GIVE_MENU_ITEM_RACE_ITEMS]       = {gDebugText_Give_RaceItems,           DEBUG_GIVE_MENU_ITEM_RACE_ITEMS},
     //[DEBUG_MENU_ITEM_ACCESS_PC] = {gDebugText_AccessPC, DEBUG_MENU_ITEM_ACCESS_PC},
 };
 static const struct ListMenuItem sDebugMenu_Items_Sound[] =
@@ -576,6 +580,7 @@ static void (*const sDebugMenu_Actions_Give[])(u8) =
     [DEBUG_GIVE_MENU_ITEM_DAYCARE_EGG]      = DebugAction_Give_DayCareEgg,
     [DEBUG_GIVE_MENU_ITEM_FILL_PC]          = DebugAction_Give_FillPC,
     [DEBUG_GIVE_MENU_ITEM_CHEAT]            = DebugAction_Give_CHEAT,
+    [DEBUG_GIVE_MENU_ITEM_RACE_ITEMS]       = DebugAction_Give_RaceItems,
     //[DEBUG_MENU_ITEM_ACCESS_PC] = DebugAction_AccessPC,
 };
 static void (*const sDebugMenu_Actions_Sound[])(u8) =
@@ -1857,6 +1862,45 @@ static void DebugAction_Give_AllTMs(u8 taskId)
     for (i = ITEM_TM01; i <= ITEM_TM50; i++)
         if(!CheckBagHasItem(i, 1))
             AddBagItem(i, 1);
+    Debug_DestroyMenu(taskId);
+    EnableBothScriptContexts();
+}
+
+// Race Items
+static void DebugAction_Give_RaceItems(u8 taskId)
+{
+    PlayFanfare(MUS_OBTAIN_ITEM);
+
+    // Give Evolution Items
+    AddBagItem(ITEM_SUN_STONE, 99);
+    AddBagItem(ITEM_MOON_STONE, 99);
+    AddBagItem(ITEM_FIRE_STONE, 99);
+    AddBagItem(ITEM_THUNDER_STONE, 99);
+    AddBagItem(ITEM_WATER_STONE, 99);
+    AddBagItem(ITEM_LEAF_STONE, 99);
+    AddBagItem(ITEM_DAWN_STONE, 99);
+    AddBagItem(ITEM_DUSK_STONE, 99);
+    AddBagItem(ITEM_SHINY_STONE, 99);
+    AddBagItem(ITEM_ICE_STONE, 99);
+    AddBagItem(ITEM_KINGS_ROCK, 99);
+    AddBagItem(ITEM_METAL_COAT, 99);
+    AddBagItem(ITEM_DRAGON_SCALE, 99);
+    AddBagItem(ITEM_RAZOR_CLAW, 99);
+    AddBagItem(ITEM_RAZOR_FANG, 99);
+    AddBagItem(ITEM_WHIPPED_DREAM, 99);
+    AddBagItem(ITEM_SACHET, 99);
+    AddBagItem(ITEM_OVAL_STONE, 99);
+    AddBagItem(ITEM_UP_GRADE, 99);
+    AddBagItem(ITEM_DEEP_SEA_TOOTH, 99);
+    AddBagItem(ITEM_DEEP_SEA_SCALE, 99);
+    AddBagItem(ITEM_DUBIOUS_DISC, 99);
+    AddBagItem(ITEM_REAPER_CLOTH, 99);
+    AddBagItem(ITEM_MAGMARIZER, 99);
+    AddBagItem(ITEM_ELECTIRIZER, 99);
+    // Give Battle Items
+    AddBagItem(ITEM_FLAME_ORB, 1);
+    AddBagItem(ITEM_TOXIC_ORB, 1);
+
     Debug_DestroyMenu(taskId);
     EnableBothScriptContexts();
 }

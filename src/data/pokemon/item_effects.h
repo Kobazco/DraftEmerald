@@ -547,7 +547,13 @@ const u8 *const gItemEffectTable[] =
     [ITEM_KINGS_ROCK - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_METAL_COAT - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DRAGON_SCALE - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_RAZOR_CLAW - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_RAZOR_FANG - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_WHIPPED_DREAM - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_SACHET - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_OVAL_STONE - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_UP_GRADE - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_DUBIOUS_DISC - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DEEP_SEA_TOOTH - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DEEP_SEA_SCALE - ITEM_POTION]     = gItemEffect_EvoStone
 };
