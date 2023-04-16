@@ -132,6 +132,7 @@ WattsonAfter::
 	closemessage
 	delay 30
 	setflag FLAG_ENABLE_WATTSON_MATCH_CALL
+	call Common_EventScript_SaveGame
 	release
 	end
 

@@ -61,6 +61,8 @@ RustboroCity_Gym_EventScript_GiveRockTomb:: @ 8212FA4
 	setvar VAR_BRINEY_LOCATION, 1
 	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setvar VAR_DEVON_CORP_3F_STATE, 1
+	closemessage
+	call Common_EventScript_SaveGame
 
 RoxanneNoAqualess::
 	giveitem ITEM_TM39

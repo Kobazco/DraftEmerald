@@ -454,6 +454,7 @@ AfterNorman::
 	delay 30
 	msgbox PetalburgCity_Gym_Text_DadHappyAndSad, MSGBOX_DEFAULT
 	closemessage
+	call Common_EventScript_SaveGame
 	delay 40
 	playse SE_DOOR
 	delay 10

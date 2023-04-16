@@ -117,6 +117,7 @@ SootopolisCity_Gym_1F_EventScript_JuanDefeated:: @ 8224F82
     closemessage
     delay 30
     setflag FLAG_ENABLE_JUAN_MATCH_CALL
+	call Common_EventScript_SaveGame
     release
     end
 
