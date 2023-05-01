@@ -764,6 +764,6 @@
 #define ITEM_B_USE_OTHER    2
 
 // Check if the item is one that can be used on a Pokemon.
-#define ITEM_HAS_EFFECT(item) (((item) >= ITEM_POTION && (item) <= LAST_BERRY_INDEX) || (item) == ITEM_KINGS_ROCK || (item) == ITEM_METAL_COAT || (item) == ITEM_UP_GRADE || (item) == ITEM_DRAGON_SCALE || (item) == ITEM_DEEP_SEA_TOOTH || (item) == ITEM_DEEP_SEA_SCALE || (item) == ITEM_RAZOR_CLAW || (item) == ITEM_RAZOR_FANG || (item) == ITEM_WHIPPED_DREAM || (item) == ITEM_SACHET || (item) == ITEM_OVAL_STONE || (item) == ITEM_DUBIOUS_DISC || (item) == ITEM_REAPER_CLOTH || (item) == ITEM_MAGMARIZER || (item) == ITEM_ELECTIRIZER)
+#define ITEM_HAS_EFFECT(item) (((item) >= ITEM_POTION && (item) <= LAST_BERRY_INDEX) || (item) == ITEM_KINGS_ROCK || (item) == ITEM_METAL_COAT || (item) == ITEM_UP_GRADE || (item) == ITEM_DRAGON_SCALE || (item) == ITEM_DEEP_SEA_TOOTH || (item) == ITEM_DEEP_SEA_SCALE || (item) == ITEM_RAZOR_CLAW || (item) == ITEM_RAZOR_FANG || (item) == ITEM_WHIPPED_DREAM || (item) == ITEM_SACHET || (item) == ITEM_OVAL_STONE || (item) == ITEM_DUBIOUS_DISC || (item) == ITEM_REAPER_CLOTH || (item) == ITEM_MAGMARIZER || (item) == ITEM_ELECTIRIZER || (item) == ITEM_PROTECTOR)
 
 #endif  // GUARD_CONSTANTS_ITEMS_H

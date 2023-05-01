@@ -1871,35 +1871,40 @@ static void DebugAction_Give_RaceItems(u8 taskId)
 {
     PlayFanfare(MUS_OBTAIN_ITEM);
 
+    // First clear the bag of other items
+    ClearBag();
     // Give Evolution Items
-    AddBagItem(ITEM_SUN_STONE, 99);
-    AddBagItem(ITEM_MOON_STONE, 99);
-    AddBagItem(ITEM_FIRE_STONE, 99);
-    AddBagItem(ITEM_THUNDER_STONE, 99);
-    AddBagItem(ITEM_WATER_STONE, 99);
-    AddBagItem(ITEM_LEAF_STONE, 99);
-    AddBagItem(ITEM_DAWN_STONE, 99);
-    AddBagItem(ITEM_DUSK_STONE, 99);
-    AddBagItem(ITEM_SHINY_STONE, 99);
-    AddBagItem(ITEM_ICE_STONE, 99);
-    AddBagItem(ITEM_KINGS_ROCK, 99);
-    AddBagItem(ITEM_METAL_COAT, 99);
-    AddBagItem(ITEM_DRAGON_SCALE, 99);
-    AddBagItem(ITEM_RAZOR_CLAW, 99);
-    AddBagItem(ITEM_RAZOR_FANG, 99);
-    AddBagItem(ITEM_WHIPPED_DREAM, 99);
-    AddBagItem(ITEM_SACHET, 99);
-    AddBagItem(ITEM_OVAL_STONE, 99);
-    AddBagItem(ITEM_UP_GRADE, 99);
-    AddBagItem(ITEM_DEEP_SEA_TOOTH, 99);
-    AddBagItem(ITEM_DEEP_SEA_SCALE, 99);
-    AddBagItem(ITEM_DUBIOUS_DISC, 99);
-    AddBagItem(ITEM_REAPER_CLOTH, 99);
-    AddBagItem(ITEM_MAGMARIZER, 99);
-    AddBagItem(ITEM_ELECTIRIZER, 99);
+    AddBagItem(ITEM_SUN_STONE, 10);
+    AddBagItem(ITEM_MOON_STONE, 10);
+    AddBagItem(ITEM_FIRE_STONE, 10);
+    AddBagItem(ITEM_THUNDER_STONE, 10);
+    AddBagItem(ITEM_WATER_STONE, 10);
+    AddBagItem(ITEM_LEAF_STONE, 10);
+    AddBagItem(ITEM_DAWN_STONE, 10);
+    AddBagItem(ITEM_DUSK_STONE, 10);
+    AddBagItem(ITEM_SHINY_STONE, 10);
+    AddBagItem(ITEM_ICE_STONE, 10);
+    AddBagItem(ITEM_KINGS_ROCK, 10);
+    AddBagItem(ITEM_METAL_COAT, 10);
+    AddBagItem(ITEM_DRAGON_SCALE, 10);
+    AddBagItem(ITEM_RAZOR_CLAW, 10);
+    AddBagItem(ITEM_RAZOR_FANG, 10);
+    AddBagItem(ITEM_WHIPPED_DREAM, 10);
+    AddBagItem(ITEM_SACHET, 10);
+    AddBagItem(ITEM_OVAL_STONE, 10);
+    AddBagItem(ITEM_UP_GRADE, 10);
+    AddBagItem(ITEM_DEEP_SEA_TOOTH, 10);
+    AddBagItem(ITEM_DEEP_SEA_SCALE, 10);
+    AddBagItem(ITEM_DUBIOUS_DISC, 10);
+    AddBagItem(ITEM_REAPER_CLOTH, 10);
+    AddBagItem(ITEM_MAGMARIZER, 10);
+    AddBagItem(ITEM_ELECTIRIZER, 10);
+    AddBagItem(ITEM_PROTECTOR, 10);
     // Give Battle Items
     AddBagItem(ITEM_FLAME_ORB, 1);
     AddBagItem(ITEM_TOXIC_ORB, 1);
+    // Rare Candy
+    AddBagItem(ITEM_RARE_CANDY, 1);
 
     Debug_DestroyMenu(taskId);
     EnableBothScriptContexts();

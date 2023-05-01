@@ -554,6 +554,10 @@ const u8 *const gItemEffectTable[] =
     [ITEM_OVAL_STONE - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_UP_GRADE - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DUBIOUS_DISC - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_MAGMARIZER - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_ELECTIRIZER - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_PROTECTOR - ITEM_POTION]     = gItemEffect_EvoStone,
+    [ITEM_REAPER_CLOTH - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DEEP_SEA_TOOTH - ITEM_POTION]     = gItemEffect_EvoStone,
     [ITEM_DEEP_SEA_SCALE - ITEM_POTION]     = gItemEffect_EvoStone
 };
