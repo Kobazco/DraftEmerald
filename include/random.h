@@ -25,4 +25,6 @@ void SeedRng(u16 seed);
 void SeedRng2(u16 seed);
 u16 PRandom(u32 *state);
 
+u16 RandomSeededModulo(u32 value, u16 modulo);
+
 #endif // GUARD_RANDOM_H

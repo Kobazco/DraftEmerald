@@ -36,3 +36,24 @@ u16 PRandom(u32 *state) {
     *state = ISO_RANDOMIZE1(*state);
     return *state >> 16;
 }
+
+// Randomizer port
+#define I_MAX 5
+u16 RandomSeededModulo(u32 value, u16 modulo)
+{
+    u32 otId;
+    u32 RAND_MAX_TX;
+    u32 result = 0;
+    u8 i = 0;
+    otId = GetTrainerId(gSaveBlock2Ptr->playerTrainerId);
+    RAND_MAX_TX = 0xFFFFFFFF - (0xFFFFFFFF % modulo);
+    gRngValue = ISO_RANDOMIZE1(gRngValue);
+
+    do
+    {
+        result = ISO_RANDOMIZE1(gRngValue + value + result);
+    }
+    while ((result >= RAND_MAX_TX) && (++i != I_MAX));
+
+    return (result % modulo);
+}
